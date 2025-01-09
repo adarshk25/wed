@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wedding Anniversary Invitation</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Roboto', sans-serif;
+      background: linear-gradient(to bottom, #f8c8d8, #f7a8b8); /* Pinkish Background */
+      overflow: hidden;
+      position: relative;
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      text-align: center;
+      padding: 20px;
+      position: relative;
+      z-index: 10;
+    }
+
+    /* Title Section */
+    .title {
+      margin-bottom: 20px;
+    }
+
+    .title h1 {
+      font-size: 2.5rem;
+      color: #e74c3c; /* Red heading color */
+      margin: 0;
+    }
+
+    .title p {
+      font-size: 1.2rem;
+      color: #7f8c8d;
+      margin: 0;
+    }
+
+    /* Envelope Section */
+    .envelope {
+      position: relative;
+      width: 250px;
+      height: 150px;
+      background: linear-gradient(145deg, #f39c12, #e67e22);
+      border-radius: 10px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
+      transition: transform 0.6s ease;
+    }
+
+    .envelope::before {
+      content: '';
+      position: absolute;
+      top: -20px;
+      left: 0;
+      width: 100%;
+      height: 80px;
+      background: #e67e22;
+      border-radius: 10px 10px 0 0;
+      transform-origin: top;
+      transform: rotateX(0deg);
+      transition: transform 0.6s ease;
+    }
+
+    .envelope.open::before {
+      transform: rotateX(-180deg);
+    }
+
+    .indicator {
+      font-size: 24px;
+      color: white;
+      animation: bounce 1.5s infinite;
+    }
+
+    @keyframes bounce {
+      0%, 100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-10px);
+      }
+    }
+
+    /* Invitation Card */
+    .invitation-card {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0.5);
+      width: 450px;  /* Increased width */
+      height: 300px;
+      background: white;
+      border-radius: 15px;
+      box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      opacity: 0;
+      transition: all 0.6s ease;
+      z-index: 10;
+    }
+
+    .invitation-card.open {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
+    }
+
+    .invitation-card h2 {
+      font-size: 2rem;
+      color: #8e44ad; /* Purple heading color */
+      margin: 0;
+    }
+
+    .invitation-card p {
+      font-size: 1.2rem;
+      color: #34495e;
+      margin: 10px 0;
+    }
+
+    .invitation-card button {
+      margin-top: 10px;
+      padding: 10px 20px;
+      background: #3498db;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .invitation-card button:hover {
+      background: #2980b9;
+    }
+
+    /* Celebration Popup */
+    .celebration-popup {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: rgba(0, 0, 0, 0.7);
+      color: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
+      text-align: center;
+      z-index: 20;
+      animation: popupAnimation 1s ease-out;
+    }
+
+    @keyframes popupAnimation {
+      0% {
+        transform: translate(-50%, -50%) scale(0);
+      }
+      100% {
+        transform: translate(-50%, -50%) scale(1);
+      }
+    }
+
+    .celebration-popup h3 {
+      font-size: 2rem;
+      margin-bottom: 10px;
+    }
+
+    .celebration-popup p {
+      font-size: 1.2rem;
+      margin-bottom: 20px;
+    }
+
+    .celebration-popup button {
+      padding: 10px 20px;
+      background: #3498db;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .celebration-popup button:hover {
+      background: #2980b9;
+    }
+
+    /* 3D Animated Hearts */
+    .hearts {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 5;
+    }
+
+    .heart {
+      position: absolute;
+      width: 50px;
+      height: 50px;
+      background-color: transparent;
+      background-image: url('https://cdn.pixabay.com/photo/2017/12/04/18/07/heart-2993929_960_720.png');
+      background-size: contain;
+      background-repeat: no-repeat;
+      animation: heartAnimation 6s infinite;
+      opacity: 0.8;
+    }
+
+    .heart:nth-child(1) {
+      animation-duration: 6s;
+      top: 10%;
+      left: 10%;
+      animation-delay: 0s;
+    }
+
+    .heart:nth-child(2) {
+      animation-duration: 5s;
+      top: 15%;
+      left: 25%;
+      animation-delay: 1s;
+    }
+
+    .heart:nth-child(3) {
+      animation-duration: 7s;
+      top: 20%;
+      left: 40%;
+      animation-delay: 2s;
+    }
+
+    .heart:nth-child(4) {
+      animation-duration: 6s;
+      top: 25%;
+      left: 55%;
+      animation-delay: 3s;
+    }
+
+    .heart:nth-child(5) {
+      animation-duration: 5s;
+      top: 30%;
+      left: 70%;
+      animation-delay: 4s;
+    }
+
+    /* Heart Floating Animation */
+    @keyframes heartAnimation {
+      0% {
+        transform: translateY(0) scale(1);
+        opacity: 0.8;
+      }
+      50% {
+        transform: translateY(-30px) scale(1.2);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(0) scale(1);
+        opacity: 0.8;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <div class="title">
+    <h1>Adarsh & Priya</h1>
+    <p>Celebrating 3 Wonderful Years Together</p>
+  </div>
+
+  <!-- Envelope -->
+  <div class="envelope" id="envelope" onclick="openCard()">
+    <div class="indicator">⬆ Click to Open</div>
+  </div>
+
+  <!-- Invitation Card -->
+  <div class="invitation-card" id="invitationCard">
+    <h2>You're Invited!</h2>
+    <p>Join us to celebrate our 3rd Wedding Anniversary</p>
+    <p><strong>February 18, 2025</strong></p>
+    <p>Adarsh & Priya</p>
+    <button onclick="closeCard()">Close</button>
+  </div>
+</div>
+
+<!-- 3D Animated Hearts in Background -->
+<div class="hearts">
+  <div class="heart"></div>
+  <div class="heart"></div>
+  <div class="heart"></div>
+  <div class="heart"></div>
+  <div class="heart"></div>
+</div>
+
+<script>
+  // Get elements
+  const envelope = document.getElementById('envelope');
+  const invitationCard = document.getElementById('invitationCard');
+  const celebrationPopup = document.getElementById('celebrationPopup');
+
+  // Function to open the card and show popup
+  function openCard() {
+    envelope.classList.add('open');  // Apply open effect to envelope
+    invitationCard.classList.add('open');  // Make the card visible
+    celebrationPopup.style.display = 'block';  // Show celebration popup
+  }
+
+  // Function to close the card
+  function closeCard() {
+    envelope.classList.remove('open');  // Reset the envelope animation
+    invitationCard.classList.remove('open');  // Hide the card
+  }
+
+  // Function to close the celebration popup
+  function closeCelebrationPopup() {
+    celebrationPopup.style.display = 'none';  // Hide the celebration popup
+  }
+</script>
+
+</body>
+</html>
